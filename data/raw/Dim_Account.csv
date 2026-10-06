@@ -1,0 +1,15 @@
+Statement_Section,Category,Account_ID,Account_Name
+Revenue,Subscription,REV_101,Enterprise SaaS Subscription
+Revenue,Subscription,REV_102,Mid-Market SaaS Subscription
+Revenue,Services,REV_201,Implementation & Consulting Services
+COGS,Hosting & Infra,COG_101,Production Cloud Hosting
+COGS,Direct Labor,COG_201,Professional Services Delivery Salaries
+OPEX,Payroll,OPX_101,Salaries & Benefits - R&D
+OPEX,Payroll,OPX_102,Salaries & Benefits - Sales & Marketing
+OPEX,Payroll,OPX_103,Salaries & Benefits - G&A
+OPEX,Marketing & Sales,OPX_201,Performance Advertising & Demand Gen
+OPEX,Marketing & Sales,OPX_202,"Events, Sponsorships & Travel"
+OPEX,Technology & R&D,OPX_301,R&D Cloud Testing & Staging Compute
+OPEX,Technology & R&D,OPX_302,Internal Software Licenses & Tools
+OPEX,General & Admin,OPX_401,"Legal, Audit & Professional Fees"
+OPEX,General & Admin,OPX_402,Office Rent & Facilities
