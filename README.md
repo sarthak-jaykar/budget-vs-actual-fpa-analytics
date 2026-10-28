@@ -1,293 +1,131 @@
-# Nexus Cloud Solutions — Financial Planning & Analysis (FP&A) Dashboard
+# Budget vs Actual FP&A and EBITDA Variance Analytics
 
-![Power BI](https://img.shields.io/badge/Power%20BI-Desktop-F2C811?logo=powerbi\&logoColor=black)
-![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python\&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-150458?logo=pandas\&logoColor=white)
-![Finance](https://img.shields.io/badge/Domain-Finance%20%7C%20FP%26A-0078D4)
+### Revenue, OPEX and EBITDA Performance Against Budget, with Variance Drivers and Management Actions
 
-## 📌 Project Overview
+![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?logo=powerbi&logoColor=black)
+![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?logo=pandas&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?logo=numpy&logoColor=white)
+![Domain](https://img.shields.io/badge/Domain-FIN-success)
+![Data Model](https://img.shields.io/badge/Data%20Model-Star%20Schema-blue)
 
-This project presents a simulated **Financial Planning & Analysis (FP&A) solution** for a mid-market enterprise SaaS and IT services company, **Nexus Cloud Solutions Inc.**
+[![Dashboard Preview](screenshots/01_Executive_Summary.png)](screenshots/01_Executive_Summary.png)
 
-The project analyzes financial performance against the approved operating budget and uses **Python for exploratory data analysis (EDA)** followed by **Power BI for interactive financial reporting and management analysis**.
-
-The objective is to move beyond financial reporting and identify the business drivers behind revenue, cost, margin, and EBITDA performance.
-
-The final solution provides a four-page management dashboard covering:
-
-* Executive financial performance
-* OPEX and cost-centre performance
-* Revenue and margin performance
-* Variance drivers and management action areas
-
-> **Project Type:** Simulated Finance / FP&A Analytics Portfolio Project
+*Select the image to view it at full size.*
 
 ---
 
-## 🎯 Business Objectives
+## Project Overview
 
-The project was designed to help management:
+This project is a simulated FP&A analysis for a fictional mid-market SaaS and IT services company, Nexus Cloud Solutions. It compares FY2025 actual results with the approved operating budget, identifies what drives the gap between budgeted and actual EBITDA, and sets out management actions.
 
-* Compare **Actual vs Budget** financial performance.
-* Monitor revenue, COGS, OPEX, EBITDA, and profitability.
-* Identify significant budget variances and their operational drivers.
-* Evaluate cost-centre and account-level spending performance.
-* Analyze revenue-stream and margin trends.
-* Identify unusual or material financial exceptions.
-* Translate financial findings into actionable management recommendations.
+The analysis uses Python for exploratory data analysis and Power BI for the reporting layer. The dashboard has four pages: executive performance, OPEX and cost centres, revenue and margin, and variance drivers with an action plan.
 
----
+The business questions are:
 
-## ❓ Key Business Questions
+1. How did actual performance compare with the approved budget?
+2. What drove the gap between budgeted and actual EBITDA?
+3. Which departments and accounts contributed most to the OPEX variance?
+4. How did each revenue stream perform?
+5. Which variances are material enough to act on?
 
-The analysis focuses on questions such as:
+### Data Source
 
-1. How did actual financial performance compare with the approved budget?
-2. What is driving the gap between budgeted and actual EBITDA?
-3. Which departments and cost centres are contributing most to OPEX variance?
-4. Which individual accounts require management attention?
-5. How are subscription and professional-services revenue streams performing?
-6. How are gross margin and EBITDA margin changing over time?
-7. Which financial variances are structural, temporary, or material enough to investigate?
-8. Where should management prioritize corrective action?
+**Data Source:** Synthetically generated for this project using Python with a fixed random seed, so results are reproducible. The company, records, and business scenarios are fictional and are intended for learning and portfolio demonstration.
 
 ---
 
-## 📊 Dashboard Features
+## Key Metrics (FY2025, actual against budget)
 
-### 1. Executive Financial Performance
+| Actual Revenue | Actual OPEX | Actual EBITDA | EBITDA Margin | Gross Margin |
+| --- | --- | --- | --- | --- |
+| **$12.82M** (−0.8%) | **$9.34M** (+2.9%) | **$1.54M** (−18.7%) | **12.0%** (budget 14.7%) | **84.9%** (budget 85.0%) |
 
-Provides a management-level overview of the company's financial position.
-
-Key analysis includes:
-
-* Actual Revenue
-* Actual OPEX
-* Actual EBITDA
-* EBITDA Margin
-* Budget vs Actual performance
-* EBITDA variance bridge
-* Monthly financial performance trends
-
-The page provides a high-level view of whether revenue performance is translating into profitability.
+Percentages in brackets are variances against budget. EBITDA here is gross profit less OPEX. The dataset has no depreciation or amortisation.
 
 ---
 
-### 2. OPEX & Cost Centre Performance
+## Key Findings
 
-Provides a deeper view of operating expenditure and departmental budget discipline.
+1. **Total revenue was close to budget, but the streams differed.** Revenue was $102K (0.8%) below budget. Enterprise and Mid-Market subscriptions were within 1% of budget. Implementation and consulting services were $113K (6.1%) below budget.
+2. **The services shortfall was concentrated in Q3.** Services revenue was 15.4% ($73.8K) below budget from July to September. It was close to budget in the other months.
+3. **OPEX ran $260K (2.9%) over budget, driven by three accounts.**
+   - R&D cloud testing and staging compute: $104K over budget (18.4%). The overrun ran from May to September, with monthly variances of 36% to 52%.
+   - Performance advertising and demand generation: $103K over budget (9.7%). Most of the overrun fell between February and May, with monthly variances of 26% to 34%.
+   - Legal, audit and professional fees: $43K over budget (11.5%). Almost all of it is a single $42K one-time legal charge in August.
+4. **EBITDA fell further than revenue.** EBITDA was $355K (18.7%) below budget. Revenue accounted for −$102K, OPEX for −$260K, and COGS for +$8K.
+5. **Gross margin was almost unchanged,** so the EBITDA gap comes from revenue and OPEX, not from delivery costs.
+6. **Marketing spend and subscription revenue show no positive link in this data.** The same-month correlation between performance advertising and Enterprise SaaS revenue is −0.51. The one-month-lag correlation is −0.04. With only 12 monthly observations, neither result supports a conclusion about marketing effectiveness.
 
-Key analysis includes:
-
-* OPEX budget vs actual performance
-* Department-level spending
-* Monthly OPEX trends
-* Cost-centre comparison
-* Account-level drill-down
-* Identification of significant spending overruns
-
-This page helps identify where operating costs are putting pressure on profitability.
-
----
-
-### 3. Revenue & Margin Performance
-
-Analyzes revenue composition and profitability across the company's major revenue streams.
-
-Key analysis includes:
-
-* Revenue by stream
-* Subscription performance
-* Professional Services performance
-* Budget vs Actual revenue
-* Gross margin performance
-* Monthly margin trends
-* Revenue and margin comparison
-
-The analysis helps distinguish top-line performance from the underlying margin impact of revenue mix and delivery performance.
+**What these findings do not show:** The results come from a simulated dataset, and the variances were built into the generator. They describe the dataset, not a real company. The dataset contains no prior-year figures, so no growth trend can be measured. It also contains no customer, pipeline or headcount data, so the causes of the services shortfall and the marketing result cannot be identified from it.
 
 ---
 
-### 4. Variance Drivers & Action Plan
+## Business Problem and Objectives
 
-Focuses on identifying the most material financial exceptions and translating them into management actions.
+Management needs to know whether revenue performance is translating into profit, which cost lines are pressuring margin, and where corrective action should go first. The project aims to:
 
-Key analysis includes:
-
-* Budget attainment and variance analysis
-* Account-level exception analysis
-* Variance severity
-* Material cost and revenue deviations
-* Variance-driver identification
-* Management action areas
-
-The page connects financial exceptions with the relevant operational areas requiring investigation or corrective action.
+1. Compare actual and budget performance across revenue, COGS, OPEX, gross profit, EBITDA and margins.
+2. Explain the EBITDA variance as a bridge from budget to actual.
+3. Identify account and department overruns, and separate one-time items from recurring ones.
+4. Give management a short list of prioritised actions.
 
 ---
 
-## 💡 Key Business Insights
+## Methodology
 
-The analysis highlights several important financial patterns:
+**Python.** The generator creates FY2025 monthly budget and actual figures for 14 accounts and 5 departments, using seed 42. Exploratory analysis in the notebook checks data integrity, calculates OPEX and revenue variances, flags statistical outliers with a z-score, and tests the marketing-to-revenue relationship with same-month and lagged correlations. `verify_data.py` prints monthly totals and ranges as a quick summary.
 
-### Revenue Performance Was Relatively Resilient
+**Power BI.** A star-schema model with the financial fact table, account and department dimensions, a date table, and a small bridge table that orders the EBITDA waterfall. Measures cover revenue, COGS, gross profit, gross margin, OPEX, EBITDA, EBITDA margin, budget and actual variances, OPEX budget utilisation, variance severity and bridge values. Measure definitions are in [`documentation/dax_measures.md`](documentation/dax_measures.md).
 
-Overall revenue remained close to the approved budget, but the result masked differences between revenue streams.
+**Variance convention.** All variances are shown as favourable positive. A negative value is unfavourable, so an OPEX overspend appears as a negative number.
 
-Subscription revenue performed comparatively strongly, while Professional Services experienced a notable shortfall during the later part of the year.
-
-### R&D Infrastructure Spending Created Significant Cost Pressure
-
-R&D cloud testing and staging compute showed sustained overspending during the middle portion of the year.
-
-This represents a more persistent cost-management issue rather than a single-period fluctuation and therefore warrants operational investigation.
-
-### Marketing Spending Required Closer Performance Monitoring
-
-Performance advertising and demand-generation spending exceeded budget during the campaign period.
-
-The analysis suggests that increased marketing expenditure did not translate into a corresponding improvement in the observed revenue trend, indicating the need for closer monitoring of marketing efficiency.
-
-### EBITDA Was More Adversely Affected Than Revenue
-
-The relatively small revenue gap compared with the larger EBITDA gap demonstrates the importance of monitoring the cost structure alongside top-line performance.
-
-OPEX pressure and revenue weakness combined to create a larger impact on operating profitability.
+**Severity thresholds.** Expense overrun above $50K is "Critical Overspend"; $15K to $50K is "Moderate Overrun"; revenue shortfall above $50K is "Major Revenue Miss". These are analytical thresholds chosen for this project, not company policy.
 
 ---
 
-## 🧪 Analytical Methodology
+## Dashboard
 
-The project follows a business-first analytical workflow:
-
-**Business Problem → Data Generation → Data Validation → Python EDA → Power BI Data Model → DAX Measures → Dashboard → Insights → Recommendations**
-
-### Python EDA
-
-Python was used before Power BI to explore the financial dataset and identify patterns requiring further investigation.
-
-The analysis included:
-
-* Data quality validation
-* Distribution analysis
-* Variance analysis
-* Outlier identification
-* Financial trend analysis
-* Cost-driver exploration
-* Revenue and expense relationships
-
-Python was used as an exploratory analytical layer rather than simply reproducing Power BI visuals.
-
-### Power BI
-
-Power BI was used as the primary reporting and decision-support layer.
-
-The model uses a structured financial data model with:
-
-* Financial fact data
-* Account dimension
-* Department dimension
-* Date dimension
-* Supporting bridge structure for variance analysis
-
-DAX measures were developed for:
-
-* Revenue
-* COGS
-* Gross Profit
-* Gross Margin
-* OPEX
-* EBITDA
-* EBITDA Margin
-* Budget vs Actual Variances
-* OPEX utilization
-* Variance severity
-* EBITDA bridge analysis
-
-Detailed DAX logic is available in [`documentation/dax_measures.md`](documentation/dax_measures.md).
+1. **[Executive Summary](screenshots/01_Executive_Summary.png):** headline KPIs, EBITDA bridge from budget to actual, and monthly revenue, budget and EBITDA trajectory.
+2. **[OPEX & Cost Centers](screenshots/02_OPEX_and_Cost_Centers.png):** OPEX against budget, department discipline, monthly spend run-rate, and an account-level breakdown.
+3. **[Revenue & Margin Performance](screenshots/03_Revenue_and_Margin_Performance.png):** revenue by stream, monthly revenue and gross margin, and an account-level variance table.
+4. **[Variance Drivers & Action Plan](screenshots/04_Variance_Drivers_Action_Plan.png):** KPI variances, budget-to-actual scatter, a variance audit grid with severity status, and three management actions.
 
 ---
 
-## 🛠️ Tools & Technologies
+## Management Actions
 
-* **Power BI Desktop** — Data modeling, DAX, interactive dashboard development
-* **Python** — Exploratory Data Analysis and data validation
-* **Pandas** — Data preparation and analysis
-* **NumPy** — Numerical analysis and synthetic data generation
-* **Jupyter Notebook** — Exploratory analysis
-* **CSV** — Financial dataset storage
+These are proposed actions based on the findings above.
 
----
-
-## 📁 Dataset
-
-The project uses a **synthetic financial dataset** designed to represent a realistic enterprise SaaS / IT services FP&A environment.
-
-The dataset contains:
-
-* Monthly financial records for FY2025
-* Budget and Actual scenarios
-* Revenue accounts
-* COGS accounts
-* OPEX accounts
-* Departments / cost centres
-* Account classifications
-
-The synthetic data intentionally includes realistic financial variance scenarios such as:
-
-* R&D infrastructure cost increases
-* Marketing expenditure overruns
-* Professional Services revenue shortfalls
-* One-time legal expense impact
-
-This allows the dashboard to demonstrate practical FP&A analysis without using confidential company information.
+1. **R&D cloud compute governance.** Automate shutdown of non-production environments, and tag compute by owner so spend can be traced. Target: keep the account within budget in the next cycle.
+2. **Marketing efficiency review.** Measure campaign-level returns before approving further increases in performance advertising. The current data cannot show a return, so measurement has to come first.
+3. **Professional services capacity.** Review the Q3 services pipeline and delivery utilisation to find out whether the shortfall came from bookings or from delivery capacity. The dataset does not include either, so this needs source data.
+4. **One-time legal costs.** Confirm whether the August legal charge is recognised as one-time, and require approval for similar items above a set threshold.
 
 ---
 
-## 🖥️ Dashboard Preview
-
-### Executive Financial Performance
-
-![Executive Summary](Screenshots/01_Executive_Summary.png)
-
-### OPEX & Cost Centre Performance
-
-![OPEX and Cost Centres](Screenshots/02_OPEX_and_Cost_Centers.png)
-
-### Revenue & Margin Performance
-
-![Revenue and Margin Performance](Screenshots/03_Revenue_and_Margin_Performance.png)
-
-### Variance Drivers & Action Plan
-
-![Variance Drivers and Action Plan](Screenshots/04_Variance_Drivers_Action_Plan.png)
-
----
-
-## 📂 Repository Structure
+## Repository Structure
 
 ```text
 nexus-fpa-analytics/
-│
 ├── README.md
-│
+├── dashboard/
+│   └── Nexus_Cloud_Solutions_FPA.pbix
 ├── data/
-│   └── raw/
-│       ├── Dim_Account.csv
-│       ├── Dim_Department.csv
-│       └── Fact_Financials.csv
-│
-├── python/
+│   ├── raw/
+│   │   ├── Dim_Account.csv
+│   │   ├── Dim_Department.csv
+│   │   └── Fact_Financials.csv
+│   └── processed/
+│       ├── Bridge_Structure.xlsx
+│       └── Dim_date.xlsx
+├── documentation/
+│   └── dax_measures.md
+├── script/
 │   ├── 01_generate_data.py
 │   ├── 02_exploratory_data_analysis.ipynb
 │   └── verify_data.py
-│
-├── powerbi/
-│   └── Nexus_Cloud_Solutions_FPA.pbix
-│
-├── documentation/
-│   └── dax_measures.md
-│
-└── Screenshots/
+└── screenshots/
     ├── 01_Executive_Summary.png
     ├── 02_OPEX_and_Cost_Centers.png
     ├── 03_Revenue_and_Margin_Performance.png
@@ -296,76 +134,38 @@ nexus-fpa-analytics/
 
 ---
 
-## ▶️ How to Reproduce
+## How to Reproduce
 
-### 1. Generate the Dataset
-
-Navigate to the `python` directory and run:
+Run these commands from the `script/` folder, because the scripts use relative paths.
 
 ```bash
-python 01_generate_data.py
+cd script
+pip install numpy pandas
+python 01_generate_data.py     # writes data/raw/ using seed 42
+python verify_data.py          # prints monthly totals and ranges
 ```
 
-This generates the financial dataset under:
+Open `02_exploratory_data_analysis.ipynb` in Jupyter from the `script/` folder to rerun the exploratory analysis.
 
-```text
-data/raw/
-```
-
-### 2. Validate the Data
-
-Run:
-
-```bash
-python verify_data.py
-```
-
-This performs basic financial validation and provides monthly financial summaries.
-
-### 3. Explore the Data
-
-Open:
-
-```text
-python/02_exploratory_data_analysis.ipynb
-```
-
-and run the notebook to reproduce the exploratory analysis.
-
-### 4. Open the Power BI Report
-
-Open:
-
-```text
-powerbi/Nexus_Cloud_Solutions_FPA.pbix
-```
-
-The Power BI report contains the completed four-page FP&A dashboard.
+**Dashboard:** open `dashboard/Nexus_Cloud_Solutions_FPA.pbix` in Power BI Desktop. If a file path does not resolve, point each source to the matching file in `data/` (Home > Transform data > Data source settings).
 
 ---
 
-## 📄 Documentation
+## Limitations
 
-Additional project documentation is available in the `documentation` folder.
-
-* [`DAX Measures Catalog`](documentation/dax_measures.md) — Key DAX calculations used in the Power BI model.
-
----
-
-## ⚠️ Disclaimer
-
-This project is a **simulated portfolio project** created for learning and demonstration purposes.
-
-The company, financial data, business scenarios, and management recommendations are fictional and do not represent the financial performance or internal operations of a real organization.
+- **Simulated data.** Budget and actual figures, and the variance scenarios, are set by the generator.
+- **One year only.** There is no prior-year comparison, so no growth can be measured.
+- **Small sample for correlations.** The marketing correlation uses 12 monthly points.
+- **EBITDA is defined here as gross profit less OPEX.** The dataset has no depreciation, amortisation, tax or other income.
+- **No drivers beyond the accounts.** There is no customer, pipeline, headcount or utilisation data, so causes cannot be confirmed.
+- **Thresholds are project choices**, not company policy.
 
 ---
 
-## 👤 Author
+## Disclaimer
 
-**Sarthak Jaykar**
+This is a simulated portfolio project. The company, financial data, business scenarios and management actions are fictional and do not represent the financial performance or internal operations of any real organisation.
 
-Focused on combining **business understanding, data analytics, and technical foundations** to solve business problems through data-driven analysis.
+---
 
-[GitHub](https://github.com/sarthak-jaykar)
-
-[LinkedIn](https://www.linkedin.com/)
+**Author:** [Sarthak Jaykar](https://www.linkedin.com/in/sarthak-jaykar/)
