@@ -1,222 +1,213 @@
-\# DAX Measures Catalog — Nexus Cloud Solutions FP\&A
+# DAX Measures Reference — Nexus Cloud Solutions FP&A
 
+All business measures are stored in the `_Measures` table. The measures below use a consistent financial variance convention:
 
+**Favourable variance is positive; unfavourable variance is negative.**
 
-All DAX business logic is stored within the `\\\_Measures` container table.
+- Revenue variance: Actual − Budget
+- Expense variance (COGS and OPEX): Budget − Actual
+- EBITDA variance: Actual − Budget
 
+---
 
+## 1. Baseline Measures
 
-\## 1. Baseline Calculations
+### Actual Amount
 
 ```dax
+Actual Amount = SUM ( Fact_Financials[Amount] )
+```
 
-Actual Amount = SUM(Fact\\\_Financials\\\[Amount]) -- filtered for Actual scenario
+Base amount measure; the Actual scenario is applied through the model's scenario filter context.
 
-Budget Amount = SUM(Fact\\\_Financials\\\[Amount]) -- filtered for Budget scenario
+### Budget Amount
 
-2. P\\\&L Statement \\\& Margin Performance Measures
-Actual Revenue = 
+```dax
+Budget Amount = SUM ( Fact_Financials[Amount] )
+```
 
-CALCULATE(
+Base amount measure; the Budget scenario is applied through the model's scenario filter context.
 
-\&#x20;   \\\[Actual Amount], 
+---
 
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "Revenue"
+## 2. P&L and Margin Measures
 
+```dax
+Actual Revenue =
+CALCULATE (
+    [Actual Amount],
+    Dim_Account[Statement_Section] = "Revenue"
 )
 
-
-
-Budget Revenue = 
-
-CALCULATE(
-
-\&#x20;   \\\[Budget Amount], 
-
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "Revenue"
-
+Budget Revenue =
+CALCULATE (
+    [Budget Amount],
+    Dim_Account[Statement_Section] = "Revenue"
 )
 
-
-
-Actual COGS = 
-
-CALCULATE(
-
-\&#x20;   \\\[Actual Amount], 
-
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "COGS"
-
+Actual COGS =
+CALCULATE (
+    [Actual Amount],
+    Dim_Account[Statement_Section] = "COGS"
 )
 
-
-
-Budget COGS = 
-
-CALCULATE(
-
-\&#x20;   \\\[Budget Amount], 
-
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "COGS"
-
+Budget COGS =
+CALCULATE (
+    [Budget Amount],
+    Dim_Account[Statement_Section] = "COGS"
 )
 
+Actual Gross Profit = [Actual Revenue] - [Actual COGS]
+Budget Gross Profit = [Budget Revenue] - [Budget COGS]
 
+Actual Gross Margin % =
+DIVIDE ( [Actual Gross Profit], [Actual Revenue], 0 )
 
-Actual Gross Profit = \\\[Actual Revenue] - \\\[Actual COGS]
+Budget Gross Margin % =
+DIVIDE ( [Budget Gross Profit], [Budget Revenue], 0 )
 
-
-
-Budget Gross Profit = \\\[Budget Revenue] - \\\[Budget COGS]
-
-
-
-Actual Gross Margin % = 
-
-DIVIDE(\\\[Actual Gross Profit], \\\[Actual Revenue], 0)
-
-
-
-Budget Gross Margin % = 
-
-DIVIDE(\\\[Budget Gross Profit], \\\[Budget Revenue], 0)
-
-
-
-Actual OPEX = 
-
-CALCULATE(
-
-\&#x20;   \\\[Actual Amount], 
-
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "OPEX"
-
+Actual OPEX =
+CALCULATE (
+    [Actual Amount],
+    Dim_Account[Statement_Section] = "OPEX"
 )
 
-
-
-Budget OPEX = 
-
-CALCULATE(
-
-\&#x20;   \\\[Budget Amount], 
-
-\&#x20;   Dim\\\_Account\\\[Statement\\\_Section] = "OPEX"
-
+Budget OPEX =
+CALCULATE (
+    [Budget Amount],
+    Dim_Account[Statement_Section] = "OPEX"
 )
 
+Actual EBITDA = [Actual Gross Profit] - [Actual OPEX]
+Budget EBITDA = [Budget Gross Profit] - [Budget OPEX]
 
+Actual EBITDA Margin % =
+DIVIDE ( [Actual EBITDA], [Actual Revenue], 0 )
 
-Actual EBITDA = \\\[Actual Gross Profit] - \\\[Actual OPEX]
+Budget EBITDA Margin % =
+DIVIDE ( [Budget EBITDA], [Budget Revenue], 0 )
+```
 
+---
 
+## 3. Financial Variance Measures
 
-Budget EBITDA = \\\[Budget Gross Profit] - \\\[Budget OPEX]
+### Revenue Variance
 
+```dax
+Revenue Variance $ = [Actual Revenue] - [Budget Revenue]
 
+Revenue Variance % =
+DIVIDE ( [Revenue Variance $], [Budget Revenue], 0 )
+```
 
-Actual EBITDA Margin % = 
+Positive values indicate revenue above budget.
 
-DIVIDE(\\\[Actual EBITDA], \\\[Actual Revenue], 0)
+### COGS Variance
 
+```dax
+COGS Variance $ = [Budget COGS] - [Actual COGS]
+```
 
+Positive values indicate COGS below budget.
 
-Budget EBITDA Margin % = 
+### OPEX Variance
 
-DIVIDE(\\\[Budget EBITDA], \\\[Budget Revenue], 0)
+```dax
+OPEX Variance $ = [Budget OPEX] - [Actual OPEX]
 
-3. Financial Variance Analytics
+OPEX Variance % =
+DIVIDE ( [OPEX Variance $], [Budget OPEX], 0 )
+```
 
-(Standard FP\\\&A Accounting Directionality: Favorable is positive, unfavorable is negative)
-Revenue Variance $ = \\\[Actual Revenue] - \\\[Budget Revenue]
+Positive values indicate OPEX below budget; negative values indicate overspend. The percentage uses the same favourable-positive direction as the dollar variance.
 
+### EBITDA Variance
 
+```dax
+EBITDA Variance $ = [Actual EBITDA] - [Budget EBITDA]
 
-Revenue Variance % = 
+EBITDA Variance % =
+DIVIDE ( [EBITDA Variance $], [Budget EBITDA], 0 )
+```
 
-DIVIDE(\\\[Revenue Variance $], \\\[Budget Revenue], 0)
+Positive values indicate EBITDA above budget.
 
+### Total Net Variance
 
-
-OPEX Variance $ = \\\[Budget OPEX] - \\\[Actual OPEX]
-
-
-
-OPEX Variance % = 
-
-DIVIDE(\\\[Actual OPEX] - \\\[Budget OPEX], \\\[Budget OPEX], 0)
-
-
-
-EBITDA Variance $ = \\\[Actual EBITDA] - \\\[Budget EBITDA]
-
-
-
-EBITDA Variance % = 
-
-DIVIDE(\\\[EBITDA Variance $], \\\[Budget EBITDA], 0)
-
-
-
-Total Net Variance $ = 
-
-VAR RevVar  = \\\[Actual Revenue] - \\\[Budget Revenue]
-
-VAR CogsVar = \\\[Budget COGS] - \\\[Actual COGS]
-
-VAR OpexVar = \\\[Budget OPEX] - \\\[Actual OPEX]
-
+```dax
+Total Net Variance $ =
+VAR RevVar = [Actual Revenue] - [Budget Revenue]
+VAR CogsVar = [Budget COGS] - [Actual COGS]
+VAR OpexVar = [Budget OPEX] - [Actual OPEX]
 RETURN
+    RevVar + CogsVar + OpexVar
+```
 
-RevVar + CogsVar + OpexVar
+Revenue, COGS and OPEX contributions combined using the favourable-positive convention. Under the project's EBITDA definition, this reconciles to EBITDA Variance $.
 
-4. Modeling, Governance \\\& Scaffolding Measures
-OPEX Budget Utilization % = 
+---
 
-DIVIDE(\\\[Actual OPEX], \\\[Budget OPEX], 0)
+## 4. Budget Utilisation and Variance Status
 
+### OPEX Budget Utilization %
 
+```dax
+OPEX Budget Utilization % =
+DIVIDE ( [Actual OPEX], [Budget OPEX], 0 )
+```
 
-Variance Severity Status = 
+Share of the OPEX budget consumed by actual expenditure.
 
-VAR RevDiff = \\\[Actual Revenue] - \\\[Budget Revenue]
+### Variance Severity Status
 
-VAR ExpDiff = (\\\[Actual OPEX] + \\\[Actual COGS]) - (\\\[Budget OPEX] + \\\[Budget COGS])
-
-VAR IsOpexOrCogs = NOT(ISBLANK(\\\[Actual OPEX])) || NOT(ISBLANK(\\\[Actual COGS]))
-
+```dax
+Variance Severity Status =
+VAR RevDiff = [Actual Revenue] - [Budget Revenue]
+VAR ExpDiff =
+    ( [Actual OPEX] + [Actual COGS] )
+        - ( [Budget OPEX] + [Budget COGS] )
+VAR IsOpexOrCogs =
+    NOT ( ISBLANK ( [Actual OPEX] ) )
+        || NOT ( ISBLANK ( [Actual COGS] ) )
 RETURN
+    SWITCH (
+        TRUE (),
+        IsOpexOrCogs && ExpDiff > 50000, "Critical Overspend",
+        IsOpexOrCogs && ExpDiff > 15000, "Moderate Overrun",
+        NOT ( IsOpexOrCogs ) && RevDiff < -50000, "Major Revenue Miss",
+        "On Track / Normal"
+    )
+```
 
-SWITCH(
+Classifies material expense overruns and revenue shortfalls using the project's stated thresholds.
 
-\&#x20;   TRUE(),
+---
 
-\&#x20;   IsOpexOrCogs \\\&\\\& ExpDiff > 50000, "Critical Overspend",
+## 5. EBITDA Bridge
 
-\&#x20;   IsOpexOrCogs \\\&\\\& ExpDiff > 15000, "Moderate Overrun",
+### Bridge Value
 
-\&#x20;   NOT(IsOpexOrCogs) \\\&\\\& RevDiff < -50000, "Major Revenue Miss",
-
-\&#x20;   "On Track / Normal"
-
+```dax
+Bridge Value =
+SWITCH (
+    SELECTEDVALUE ( Bridge_Structure[Sort] ),
+    1, [Budget EBITDA],
+    2, [Revenue Variance $],
+    3, [Budget COGS] - [Actual COGS],
+    4, [OPEX Variance $],
+    5, [Actual EBITDA]
 )
+```
 
+Returns the value associated with each bridge step: Budget EBITDA, revenue variance, COGS variance, OPEX variance and Actual EBITDA. The OPEX step references the defined measure name `[OPEX Variance $]`.
 
+---
 
-Bridge Value = 
+## Measure Design Notes
 
-SWITCH(
-
-\&#x20;   SELECTEDVALUE(Bridge\\\_Structure\\\[Sort]),
-
-\&#x20;   1, \\\[Budget EBITDA],
-
-\&#x20;   2, \\\[Revenue Variance $],     3, \\\[Budget COGS] - \\\[Actual COGS],     4, \\\[OPEX Variance$],
-
-\&#x20;   5, \\\[Actual EBITDA]
-
-)
-
-
-
-
+- `Actual Amount` and `Budget Amount` are base measures; scenario context is supplied by the model.
+- Variance measures use one consistent favourable-positive convention.
+- `DIVIDE()` is used for ratio calculations to handle zero denominators.
+- EBITDA is defined in this project as Gross Profit less OPEX; depreciation and amortisation are not included in the dataset.
+- Thresholds in `Variance Severity Status` are project assumptions, not company policy.
