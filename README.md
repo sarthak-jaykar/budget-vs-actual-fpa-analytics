@@ -107,7 +107,7 @@ These are proposed actions based on the findings above.
 ## Repository Structure
 
 ```text
-nexus-fpa-analytics/
+budget-vs-actual-fpa-analytics/
 ├── README.md
 ├── dashboard/
 │   └── Nexus_Cloud_Solutions_FPA.pbix
@@ -168,4 +168,5 @@ This is a simulated portfolio project. The company, financial data, business sce
 
 ---
 
-**Author:** [Sarthak Jaykar](https://www.linkedin.com/in/sarthak-jaykar/)
+**Author:** [Sarthak Jaykar](https://www.linkedin.com/in/sarthak-jaykar/)  
+[GitHub](https://github.com/sarthak-jaykar)
